@@ -40,10 +40,7 @@ btn.addEventListener('click', (e) => {
         btn.innerHTML = "Send Another Message"
     }
     else if(passcode != "")
-        alert("Your passcode must contain at least 1 capital letter and 1 number")
+        alert("Your passcode must contain at least 1 capital letter and 1 number");
     else
         return;  //when passcode field is empty, no alert needed bc browser flag
-});
-
-messField.value = "";
-passField.value = "";
+})
