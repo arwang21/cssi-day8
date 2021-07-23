@@ -39,10 +39,11 @@
             <div class="field">
               <div class="control">
                 <textarea class="textarea is-medium is-rounded" type="text" id="message" placeholder="Share a secret message with your friend!" autocomplete="current-password" required></textarea>
+                <p id="chars" class="has-text-right">/280</p>
               </div>
             </div>
             <br />
-            <button class="button is-block is-fullwidth is-primary is-medium is-rounded">
+            <button id="sendMsg" class="button is-block is-fullwidth is-primary is-medium is-rounded">
               Send Message
             </button>
           </form>
@@ -50,6 +51,7 @@
         </div>
       </div>
     </section>
+    <script defer src="https://cdn.rawgit.com/h2non/jsHashes/master/hashes.js"></script>;
     <script defer src="js/writeMessage.js"></script>
   </body>
 

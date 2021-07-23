@@ -1,4 +1,7 @@
+var MD5 = new Hashes.MD5;
+
 const maxAttempts = 3;
+let messDiv = document.querySelector("#message");
 
 const getMessages = () => {
     const messagesRef = firebase.database().ref();
@@ -14,13 +17,14 @@ const getMessages = () => {
 
 const findMessage = (myPass) => {
     const messagesRef = firebase.database().ref();
-        messagesRef.on('value', (snapshot) => {
+        messagesRef.on('value', (snapshot) => { //"value" is triggered by changes made in the database
         const data = snapshot.val();
         //console.log(data);
         let count = 0;  //counts number of passcode matches
-        for(let key in data) {
+        for(let key in data) {  //iterates over keys in data
+            //console.log(key);
             const message = data[key];
-            //console.log(message);
+            console.log(message);
             if(myPass == message.passcode) {
                 renderMessage(message);
                 count ++;
@@ -35,12 +39,12 @@ const findMessage = (myPass) => {
 
             if (attempts <= maxAttempts) {
                 //display error message, #attempts remaining
-                document.querySelector("#message").innerHTML = `bad passcode: ${4-attempts} remaining`;
+                messDiv.innerHTML = `bad passcode: ${4-attempts} remaining`;
             }
             else {
                 //SPICY 1
                 document.querySelector("#passcodeInput").style.display = "none";
-                document.querySelector("#message").innerHTML = "try again later";
+                messDiv.innerHTML = "try again later";
                 //SPICY2
                 setTimeout(() => {
                     location.reload();
@@ -53,14 +57,14 @@ const findMessage = (myPass) => {
 const renderMessage = (message) => {
     document.querySelector("#passcodeInput").style.display = "none";
     //concatenate & add line break for multiple messages w/ same passcode
-    document.querySelector("#message").innerHTML = document.querySelector("#message").innerHTML + message.message + "<br>";
+    messDiv.innerHTML = messDiv.innerHTML + message.message + "<br>";
 }
 
 let attempts = 0;
-document.querySelector("#viewMsg").addEventListener("click", () => {
+document.querySelector("#viewMsg").addEventListener("click", (e) => {
     attempts ++;
-    const passcode = document.querySelector("#passcode").value;
+    const passcode = MD5.hex(document.querySelector("#passcode").value);
     //clear error message
-    document.querySelector("#message").innerHTML = "";
+    messDiv.innerHTML = "";
     findMessage(passcode);
 })
